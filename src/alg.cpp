@@ -1,20 +1,23 @@
 // Copyright 2022 NNTU-CS
-#include  <iostream>
-#include  <fstream>
-#include  <locale>
-#include  <cstdlib>
-#include  "tree.h"
+#include "tree.h"
 #include <algorithm>
-
+#include <iostream>
+#include <fstream>
+#include <locale>
+#include <cstdlib>
+#include <vector>
+#include <memory>
 
 PMTreeNode::PMTreeNode(char v) : value(v) {}
 
-static void buildTree(std::shared_ptr<PMTreeNode> node, std::vector<char> remaining) {
+static void buildTree(std::shared_ptr<PMTreeNode> node,
+                      const std::vector<char>& remaining) {
   if (remaining.empty()) return;
-  std::sort(remaining.begin(), remaining.end());
-  for (size_t i = 0; i < remaining.size(); ++i) {
-    char val = remaining[i];
-    std::vector<char> next_rem(remaining);
+  std::vector<char> sorted_rem = remaining;
+  std::sort(sorted_rem.begin(), sorted_rem.end());
+  for (size_t i = 0; i < sorted_rem.size(); ++i) {
+    char val = sorted_rem[i];
+    std::vector<char> next_rem(sorted_rem);
     next_rem.erase(next_rem.begin() + i);
     auto child = std::make_shared<PMTreeNode>(val);
     node->children.push_back(child);
@@ -23,10 +26,14 @@ static void buildTree(std::shared_ptr<PMTreeNode> node, std::vector<char> remain
 }
 
 PMTree::PMTree(const std::vector<char>& elems) : elements(elems) {
-  root = std::make_shared<PMTreeNode>(0); 
+  root = std::make_shared<PMTreeNode>(0);
+  buildTree(root, elements);
 }
 
-static void collect(std::shared_ptr<PMTreeNode> node, std::vector<char>& path, std::vector<std::vector<char>>& res, int depth, int max_depth) {
+static void collect(const std::shared_ptr<PMTreeNode>& node,
+                    std::vector<char>& path,
+                    std::vector<std::vector<char>>& res,
+                    int depth, int max_depth) {
   if (depth == max_depth) {
     res.push_back(path);
     return;
@@ -70,7 +77,8 @@ std::vector<char> getPerm2(PMTree& tree, int num) {
   for (int i = n - 1; i >= 0; --i) {
     int f = fact[i];
     int idx = permNum / f;
-    if (idx >= temp.size()) return {};
+    if (idx >= static_cast<int>(temp.size())) return {};
+    res.push_back(temp[idx]);
     temp.erase(temp.begin() + idx);
     permNum %= f;
   }
