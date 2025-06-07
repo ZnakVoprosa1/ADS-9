@@ -1,13 +1,10 @@
 // Copyright 2022 NNTU-CS
-#define _CRT_SECURE_NO_WARNINGS
-
-#include "tree.h"
-
 #include <cstdio>
 #include <vector>
 #include <iostream>
 #include <chrono>
 #include <random>
+#include "tree.h"
 
 void printPerm(const std::vector<char>& p) {
   for (auto c : p) std::cout << c;
