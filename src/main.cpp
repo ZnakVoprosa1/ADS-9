@@ -1,4 +1,5 @@
 // Copyright 2022 NNTU-CS
+#define _CRT_SECURE_NO_WARNINGS
 #include "tree.h"
 #include <iostream>
 #include <chrono>
