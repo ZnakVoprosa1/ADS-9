@@ -1,5 +1,4 @@
 // Copyright 2022 NNTU-CS
-#include "tree.h"
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -7,6 +6,7 @@
 #include <cstdlib>
 #include <vector>
 #include <memory>
+#include "tree.h"
 
 PMTreeNode::PMTreeNode(char v) : value(v) {}
 
