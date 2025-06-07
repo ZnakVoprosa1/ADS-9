@@ -2,8 +2,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "tree.h"
-#include <vector>
+
 #include <cstdio>
+#include <vector>
 #include <iostream>
 #include <chrono>
 #include <random>
